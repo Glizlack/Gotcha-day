@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gotcha Day Countdown</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            /* Ensure your image is named background.jpg in the same folder */
+            background: url('background.jpg') no-repeat center center fixed;
+            background-size: cover;
+            margin: 0;
+            height: 100vh;
+            overflow: hidden;
+        }
+        .glass {
+            background: rgba(0, 0, 0, 0.4); /* Darker tint for better contrast */
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+    </style>
+</head>
+<body class="p-6 md:p-10">
+
+    <div class="glass p-6 rounded-2xl shadow-2xl inline-block text-white">
+        <h1 class="text-xl font-bold tracking-tight uppercase mb-1">Gotcha Day</h1>
+        <p class="text-xs opacity-70 mb-4 font-medium italic">April 10, 2026</p>
+
+        <div class="grid grid-cols-4 gap-4 text-center">
+            <div class="flex flex-col">
+                <span id="days" class="text-3xl font-black">00</span>
+                <span class="text-[10px] uppercase tracking-widest opacity-60">Days</span>
+            </div>
+            <div class="flex flex-col border-l border-white/10">
+                <span id="hours" class="text-3xl font-black pl-4">00</span>
+                <span class="text-[10px] uppercase tracking-widest opacity-60 pl-4">Hrs</span>
+            </div>
+            <div class="flex flex-col border-l border-white/10">
+                <span id="minutes" class="text-3xl font-black pl-4">00</span>
+                <span class="text-[10px] uppercase tracking-widest opacity-60 pl-4">Min</span>
+            </div>
+            <div class="flex flex-col border-l border-white/10">
+                <span id="seconds" class="text-3xl font-black pl-4 text-yellow-400">00</span>
+                <span class="text-[10px] uppercase tracking-widest opacity-60 pl-4 text-yellow-400/80">Sec</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function updateCountdown() {
+            // Target: April 10, 2026 00:00:00
+            const targetDate = new Date("April 10, 2026 00:00:00").getTime();
+            const now = new Date().getTime();
+            const difference = targetDate - now;
+
+            if (difference < 0) {
+                document.querySelector('.grid').innerHTML = "<span class='col-span-4 text-xl font-bold py-2'>Happy Gotcha Day! 🐾</span>";
+                return;
+            }
+
+            const d = Math.floor(difference / (1000 * 60 * 60 * 24));
+            const h = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((difference % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerText = d;
+            document.getElementById("hours").innerText = h.toString().padStart(2, '0');
+            document.getElementById("minutes").innerText = m.toString().padStart(2, '0');
+            document.getElementById("seconds").innerText = s.toString().padStart(2, '0');
+        }
+
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+    </script>
+</body>
+</html>
